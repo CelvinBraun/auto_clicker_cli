@@ -3,11 +3,13 @@ import threading
 from pynput.mouse import Button, Controller
 from pynput.keyboard import Listener, KeyCode
 
-
+#default values
 delay = 0.5
-button = Button.left #left mouse click
+button = Button.left
 start_pause_key = KeyCode(char='ü')
 exit_key = KeyCode(char='ä')
+
+
 
 
 class ClickMouse(threading.Thread):
@@ -51,6 +53,6 @@ def on_press(key):
         click_thread.exit()
         listener.stop()
 
-
+print("Click 'ü' for start/pause and 'ä' for stop....")
 with Listener(on_press=on_press) as listener:
     listener.join()

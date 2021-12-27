@@ -2,15 +2,15 @@ import time
 import threading
 from pynput.mouse import Button, Controller
 from pynput.keyboard import Listener, KeyCode
+import json
 
-#default values
-delay = 0.5
+with open("config.json", "r", encoding="utf-8") as file:
+    data = json.load(file)
+
+delay = data["delay"]
 button = Button.left
-start_pause_key = KeyCode(char='ü')
-exit_key = KeyCode(char='ä')
-
-
-
+start_pause_key = KeyCode(char=data["start_pause_key"])
+exit_key = KeyCode(char=data["exit_key"])
 
 class ClickMouse(threading.Thread):
     def __init__(self, delay, button):
@@ -53,6 +53,6 @@ def on_press(key):
         click_thread.exit()
         listener.stop()
 
-print("Click 'ü' for start/pause and 'ä' for stop....")
+print(f"Click {start_pause_key} for start/pause and {exit_key} for stop....")
 with Listener(on_press=on_press) as listener:
     listener.join()
